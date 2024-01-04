@@ -9,6 +9,6 @@ interface Period {
         override fun title() = title
     }
 
-    object Pomodoro: Abstract(2, "Work time!")
-    object Break: Abstract(1, "Break time!")
+    data class Pomodoro(private val timeInMinutes: Int): Abstract(timeInMinutes, "Work time!")
+    data class Break(private val timeInMinutes: Int): Abstract(timeInMinutes, "Break time!")
 }

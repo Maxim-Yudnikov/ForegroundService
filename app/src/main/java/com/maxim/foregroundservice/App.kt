@@ -7,8 +7,9 @@ class App : Application(), ProvideViewModel {
 
     override fun onCreate() {
         super.onCreate()
+        val isDebug = BuildConfig.DEBUG
         val periodList = listOf(
-            Period.Pomodoro, Period.Break
+            Period.Pomodoro(if (isDebug) 2 else 25), Period.Break(if (isDebug) 1 else 5)
         )
         viewModel = MainViewModel(
             Communication.Base(),

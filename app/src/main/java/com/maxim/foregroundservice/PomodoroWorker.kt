@@ -7,7 +7,7 @@ import android.app.PendingIntent
 import android.app.TaskStackBuilder
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ServiceInfo
+import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
@@ -36,7 +36,10 @@ class PomodoroWorker(context: Context, params: WorkerParameters) :
                 val timeUi = viewModel.timeUi(time)
                 notificationManager.notify(
                     NOTIFICATION_ID,
-                    makeNotification(viewModel.currentPeriod().title() + " " + viewModel.title(), timeUi)
+                    makeNotification(
+                        viewModel.currentPeriod().title() + " " + viewModel.title(),
+                        timeUi
+                    )
                 )
                 viewModel.update(timeUi)
             }
@@ -54,7 +57,7 @@ class PomodoroWorker(context: Context, params: WorkerParameters) :
             ForegroundInfo(
                 NOTIFICATION_ID,
                 makeNotification(title, text),
-                ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+                FOREGROUND_SERVICE_TYPE_DATA_SYNC
             )
         else
             ForegroundInfo(NOTIFICATION_ID, makeNotification(title, text))
@@ -74,6 +77,7 @@ class PomodoroWorker(context: Context, params: WorkerParameters) :
             .setContentText(text)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setOngoing(true)
+            .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
             .setContentIntent(resultPendingIntent)
             .build()
     }

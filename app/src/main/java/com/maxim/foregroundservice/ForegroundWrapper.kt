@@ -17,7 +17,7 @@ interface ForegroundWrapper {
         }
 
         override fun stop() {
-            workManager.cancelUniqueWork(NAME) //todo need?
+            workManager.cancelUniqueWork(NAME)
         }
 
         companion object {
